@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: log-output
+  name: log-output
+  namespace: log-output
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: log-output
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: log-output
+    spec:
+      containers:
+        - image: vinhng10/log-output:107
+          name: log-output
+          resources: {}
+status: {}
