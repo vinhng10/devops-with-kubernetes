@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: log-output-service
+  name: log-output-service
+  namespace: log-output
+spec:
+  ports:
+    - name: 80-8000
+      port: 80
+      protocol: TCP
+      targetPort: 8000
+  selector:
+    app: log-output
+  type: ClusterIP
+status:
+  loadBalancer: {}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  creationTimestamp: null
+  labels:
+    app: ping-pong-service
+  name: ping-pong-service
+  namespace: log-output
+spec:
+  ports:
+    - name: 80-8000
+      port: 80
+      protocol: TCP
+      targetPort: 8000
+  selector:
+    app: ping-pong
+  type: ClusterIP
+status:
+  loadBalancer: {}
