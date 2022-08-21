@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  creationTimestamp: null
+  labels:
+    app: todo-backend
+  name: todo-backend
+  namespace: todo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: todo-backend
+  strategy: {}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: todo-backend
+    spec:
+      volumes:
+        - name: volume
+          persistentVolumeClaim:
+            claimName: todo-backend-pvc
+      containers:
+        - image: vinhng10/todo-backend:0.7
+          name: todo-backend
+          volumeMounts:
+            - name: volume
+              mountPath: /volume
+          resources: {}
+        - image: busybox:1.34
+          name: image-downloader
+          command: ["/bin/sh", "-c"]
+          command:
+            - /bin/sh
+            - -c
+            - |
+              rm -f /volume/image.png && 
+              while true; do wget https://picsum.photos/1200 -O /volume/image.png; sleep 86400; done
+          volumeMounts:
+            - name: volume
+              mountPath: /volume
+          resources: {}
+status: {}
